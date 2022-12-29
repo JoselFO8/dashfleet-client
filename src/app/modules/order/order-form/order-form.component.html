@@ -1,0 +1,55 @@
+<div class="order-container">
+    <form class="form" [formGroup]="orderForm" (ngSubmit)="submitForm()">
+        
+        <!--------------------------- Field orderCode --------------------------->
+    
+        <div class="form__field">
+            <label class="form__label">Codigo pedido*:</label>
+            <input class="form__input" type="text" placeholder="Codigo pedido..." formControlName="orderCode">
+            <small class="form__small" 
+                *ngIf="form['orderCode'].errors && formSubmited"
+            >
+                <ng-container [ngSwitch]="form['orderCode'].value">
+                    <ng-container *ngSwitchDefault>El orderCode es requerido!</ng-container>
+                </ng-container>
+            </small>
+        </div>
+        
+        <!--------------------------- Field documentType --------------------------->
+    
+        <div class="form__field">
+            <label class="form__label" for="">Tipo documento*:</label>
+            <select class="form__select" formControlName="documentType">
+                <option value="CC">Cedula</option>
+                <option value="CE">Cedula Extrangera</option>
+                <option value="TI">Tarjeta Identidad</option>
+            </select>
+            <SMall class="form__small" 
+                *ngIf="form['documentType'].errors && formSubmited"
+            >
+                <ng-container [ngSwitch]="form['documentType'].value">
+                    <ng-container *ngSwitchDefault>El documentType es requerido!</ng-container>
+                </ng-container>
+            </SMall>
+        </div>
+    
+        <div class="form__field">
+            <label class="form__label" for="">Documento*:</label>
+            <input class="form__input" type="text" placeholder="Documento..." formControlName="documentNumber">
+            <SMall class="form__small" 
+                *ngIf="form['documentNumber'].errors && formSubmited"
+            >
+                <ng-container [ngSwitch]="form['documentNumber'].value">
+                    <ng-container *ngSwitchCase="''">El numero de documento es requerido!</ng-container>
+                    <ng-container *ngSwitchDefault>El numero de documento es invalido!</ng-container>
+                </ng-container>
+            </SMall>
+        </div>
+    
+        <!--------------------------- Signup Signin --------------------------->
+        
+        <div class="form__submit">
+            <button class="form__button" type="submit">Consultar</button>
+        </div>
+    </form>
+</div>
