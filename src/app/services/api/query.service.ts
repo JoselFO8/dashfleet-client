@@ -15,6 +15,12 @@ export class QueryService {
     private router: Router
   ) { }
 
+  /**
+   * Validar si existe un pedido asociado a un usuario especifico
+   * Enviar codigo de pedido, tipo de documento y numero de documento
+   * @param info 
+   * @returns 
+   */
   validateUserOrder(info: { documentType: string; documentNumber: number; orderCode: string; }):Observable<{
     error: boolean;
     msg: string;
@@ -34,9 +40,7 @@ export class QueryService {
 
         return response
       }),
-      catchError(e => { 
-        return of(response)
-      })
+      catchError(() => of(response))
     )
   }
 

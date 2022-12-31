@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map  } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { IOrder, IOrders } from '../../modules/order/order-form/iorder.metadata';
+import { IOrder } from '../../modules/order/order-form/iorder.metadata';
 
 @Injectable({
   providedIn: 'root'
@@ -23,20 +23,21 @@ export class OrderService {
     return of({error:true, msg:errorMsg, data: null })
   }
 
- 
   /**
-   * Tomar un usuario por su ID
+   * Tomar un pedido por codigo de pedido
+   * Enviar codigo de pedido
+   * @param id 
+   * @returns 
    */
-  getUserById(id: string): Observable<{error:boolean, msg:string, data: IOrders}>{
-    const response = {error: false, msg: '', data: {} as any}
-    console.log('PRUEBA', this.url, `/${id}`);
-    
-    return this.http.get<IOrders>(this.url + `/${id}`)
+  getOrderById(id: string): Observable<{error:boolean, msg:string, data: IOrder}>{
+    const response = {error: true, msg: 'No se encontraron pedidos', data: {} as IOrder}
+    return this.http.get<{error: boolean, msg: string, data: IOrder}>(this.url + `/orders/${id}`)
     .pipe(
       map(
         r => {
-          console.log('desde SERVICE',r)
-          response.data = r
+          response.error = r.error
+          response.msg = r.msg
+          response.data = r.data
           return response;
         }
       ),

@@ -1,1 +1,42 @@
-<p>order-detail works!</p>
+<div class="detail">
+    <div class="detail__order order" *ngIf="order && order.userInfo else loaderOrder">
+        <p class="order__p">Codigo de pedido: {{order._id}}</p>
+        <p class="order__p">Cliente: {{order.userInfo.name}}</p>
+        <p class="order__p">Dirección de entrega: {{order.deliveryAddress}}</p>
+        
+        <table className="order__table table">
+            <thead className="table__head">
+                <tr>
+                    <th className="table__th" scope="col">Nombre de producto</th>
+                    <th className="table__th" scope="col">Ref.</th>
+                    <th className="table__th" scope="col">Cantidad</th>
+                </tr>
+            </thead>
+            
+            <tbody className="table__body">
+                <ng-container *ngFor="let product of order.products">
+                    <tr>
+                        <td className="table__td">{{product.name}}</td>
+                        <td className="table__td">{{product.reference}}</td>
+                        <td className="table__td">{{product.quantity}}</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+
+        <p class="order__p">Estado del pedido: {{order.deliveryStatus}}</p>
+        <p class="order__p">Fecha estimada de entrega: {{order.deliverDate}}</p>
+        
+        <div class="order__buttons buttons">
+            <button class="buttons__button">Cerrar</button>
+            <button class="buttons__button buttons__button--back" routerLink="/order">Nueva consulta</button>
+        </div>
+    </div>
+
+    <ng-template #loaderOrder>
+        <div class="detail__loader loader">
+            <img class="loader__img" src="https://gifimage.net/wp-content/uploads/2018/04/loader-gif-transparent-2.gif" alt="Cargando pedido">
+            <button class="loader__button" routerLink="/order">Volver</button>
+        </div>
+    </ng-template>
+</div>

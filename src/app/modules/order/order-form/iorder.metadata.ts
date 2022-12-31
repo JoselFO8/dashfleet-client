@@ -1,7 +1,3 @@
-export interface IOrders {
-    users: IOrder[]
-}
-
 export interface IOrder {
     _id: string;
     clientId: string;

@@ -20,9 +20,9 @@ export class OrderDetailComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.orderService.getUserById(this.id).subscribe(
+    this.orderService.getOrderById(this.id).subscribe(
       r => {
-        console.log('desde Order-detail',r);
+        this.order = r.data
       }
     )
   }
