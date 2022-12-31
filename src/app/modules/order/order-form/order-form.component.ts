@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { QueryService } from 'src/app/services/api/query.service';
 
 @Component({
   selector: 'app-order-form',
@@ -12,8 +13,7 @@ export class OrderFormComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    
-    
+    private queryService: QueryService
   ) {
     this.orderForm = this.formBuilder.group({
       orderCode: [
@@ -47,6 +47,6 @@ export class OrderFormComponent {
     if(!this.orderForm.valid) {
       return 
     }
-    console.log("Submited");
-    }
+    this.queryService.validateUserOrder(this.orderForm.value as any).subscribe()
+  }
 }

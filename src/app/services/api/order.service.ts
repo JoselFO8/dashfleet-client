@@ -2,13 +2,14 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map  } from 'rxjs/operators';
-import { IOrder, IOrders } from '../modules/order/order-form/iorder.metadata';
+import { environment } from 'src/environments/environment';
+import { IOrder, IOrders } from '../../modules/order/order-form/iorder.metadata';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
-  public url = "http://localhost:4000/orders/"
+  public url = environment._APIUrl
 
   constructor(private http:HttpClient){}
 
@@ -26,17 +27,20 @@ export class OrderService {
   /**
    * Tomar un usuario por su ID
    */
-  // getUserById(id: number): Observable<{data:IOrders}>{
-  //   const response = {data: {} as IOrder}
-  //   return this.http.get<IOrders>(this.url + id)
-  //   .pipe(
-  //     map(
-  //       r => {
-  //         console.log(r)
-  //         return response;
-  //       }
-  //     ),
-  //     catchError(() => of(response))
-  //   );
-  // }
+  getUserById(id: string): Observable<{error:boolean, msg:string, data: IOrders}>{
+    const response = {error: false, msg: '', data: {} as any}
+    console.log('PRUEBA', this.url, `/${id}`);
+    
+    return this.http.get<IOrders>(this.url + `/${id}`)
+    .pipe(
+      map(
+        r => {
+          console.log('desde SERVICE',r)
+          response.data = r
+          return response;
+        }
+      ),
+      catchError(() => of(response))
+    );
+  }
 }
